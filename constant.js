@@ -1,0 +1,5 @@
+const TOKEN_EXP_TIME = '1m';
+const REFRESH_TOKEN_EXP_TIME = '2m';
+const PRIVATE_KEY = '12345';
+
+module.exports = { TOKEN_EXP_TIME, REFRESH_TOKEN_EXP_TIME, PRIVATE_KEY };
