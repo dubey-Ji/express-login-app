@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const { PRIVATE_KEY, TOKEN_EXP_TIME, REFRESH_TOKEN_EXP_TIME } = require('../constant');
+const { PRIVATE_KEY, TOKEN_EXP_TIME, REFRESH_TOKEN_EXP_TIME, PURPOSE } = require('../constant');
 const { User } = require('../schemas/index');
 
 const router = express.Router();
@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
       res.status(403)
       return res.json({ message: 'User already exist' });
     }
-    const resp = await userModel.create({
+    await userModel.create({
       email, name, password
     });
     res.status(201);
@@ -40,8 +40,8 @@ router.post('/login', async (req, res) => {
       res.status(400);
       return res.json({ message: 'User not found' });
     } else if (user.password === password) {
-      const token = jwt.sign({ email, name: user.email, purpose: 'access' }, PRIVATE_KEY, { algorithm: 'HS256', expiresIn: TOKEN_EXP_TIME });
-      const refreshToken = jwt.sign({ email, name: user.name, purpose: 'refresh' }, PRIVATE_KEY, { algorithm: 'HS256', expiresIn: REFRESH_TOKEN_EXP_TIME });
+      const token = jwt.sign({ email, name: user.email, purpose: PURPOSE.ACCESS }, PRIVATE_KEY, { algorithm: 'HS256', expiresIn: TOKEN_EXP_TIME });
+      const refreshToken = jwt.sign({ email, name: user.name, purpose: PURPOSE.REFRESH }, PRIVATE_KEY, { algorithm: 'HS256', expiresIn: REFRESH_TOKEN_EXP_TIME });
       res.status(200);
       return res.json({ token, refreshToken });
     } else if (user.password !== password) {
@@ -57,9 +57,9 @@ router.post('/login', async (req, res) => {
 
 router.get('/refreshToken', (req, res) => {
   let refreshToken = req.headers['authorization'].split(' ')[1];
-  if (jwt.verify(refreshToken, PRIVATE_KEY).purpose === 'refresh') {
+  if (jwt.verify(refreshToken, PRIVATE_KEY).purpose === PURPOSE.REFRESH) {
     let userInfo = jwt.decode(refreshToken);
-    let token = jwt.sign({ email: userInfo.email, name: userInfo.name, purpose: 'access' }, PRIVATE_KEY, { algorithm: 'HS256', expiresIn: TOKEN_EXP_TIME });
+    let token = jwt.sign({ email: userInfo.email, name: userInfo.name, purpose: PURPOSE.ACCESS }, PRIVATE_KEY, { algorithm: 'HS256', expiresIn: TOKEN_EXP_TIME });
     res.status(200);
     return res.json({ token });
   }
