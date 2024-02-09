@@ -24,7 +24,7 @@ function authMiddleware(req, res, next) {
     if (!isTokenExpire(decodedToken.exp)) {
       next('/refreshToken');
     } else {
-      res.statu(400);
+      res.status(400);
       return res.json({ message: 'Unathorized' });
     }
   }
