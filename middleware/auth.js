@@ -1,4 +1,4 @@
-const { PRIVATE_KEY, PROTECTED_PATH } = require('../constant');
+const { PRIVATE_KEY, PROTECTED_PATH, PURPOSE } = require('../constant');
 const jwt = require('jsonwebtoken');
 
 // const PROTECTED_PATH = ['dashboard'];
@@ -13,14 +13,14 @@ function isTokenExpire(expireTime) {
 function authMiddleware(req, res, next) {
   const token = req.headers['authorization'].split(' ')[1];
   const decodedToken = jwt.decode(token);
-  if (jwt.verify(token, PRIVATE_KEY) && jwt.verify(token, PRIVATE_KEY).purpose === 'access') {
+  if (jwt.verify(token, PRIVATE_KEY) && jwt.verify(token, PRIVATE_KEY).purpose === PURPOSE.ACCESS) {
     if (!isTokenExpire(decodedToken.exp)) {
       next();
     } else {
       res.status(400);
       return res.json({ message: 'Unathorized' });
     }
-  } else if (jwt.verify(token, PRIVATE_KEY) && jwt.verify(token, PRIVATE_KEY).purpose === 'refresh') {
+  } else if (jwt.verify(token, PRIVATE_KEY) && jwt.verify(token, PRIVATE_KEY).purpose === PURPOSE.REFRESH) {
     if (!isTokenExpire(decodedToken.exp)) {
       next('/refreshToken');
     } else {
