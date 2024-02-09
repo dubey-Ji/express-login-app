@@ -1,7 +1,7 @@
-const { PRIVATE_KEY } = require('../constant');
+const { PRIVATE_KEY, PROTECTED_PATH } = require('../constant');
 const jwt = require('jsonwebtoken');
 
-const PROTECTED_PATH = ['dashboard'];
+// const PROTECTED_PATH = ['dashboard'];
 
 function isTokenExpire(expireTime) {
   if ((Math.floor(Date.now() / 1000) - expireTime) < 0) {

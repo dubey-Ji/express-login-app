@@ -2,3 +2,4 @@
 /node_modules
 /playground.js
 /client/node_modules
+/.env

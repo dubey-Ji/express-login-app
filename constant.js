@@ -1,5 +1,8 @@
-const TOKEN_EXP_TIME = '1m';
-const REFRESH_TOKEN_EXP_TIME = '2m';
-const PRIVATE_KEY = '12345';
+const TOKEN_EXP_TIME = process.env.TOKEN_EXP_TIME;
+const REFRESH_TOKEN_EXP_TIME = process.env.REFRESH_TOKEN_EXP_TIME;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const MONGODB_URI = process.env.MONGODB_URI;
+const PORT = process.env.PORT;
+const PROTECTED_PATH = process.env.PROTECTED_PATH
 
-module.exports = { TOKEN_EXP_TIME, REFRESH_TOKEN_EXP_TIME, PRIVATE_KEY };
+module.exports = { TOKEN_EXP_TIME, REFRESH_TOKEN_EXP_TIME, PRIVATE_KEY, PORT, MONGODB_URI, PROTECTED_PATH };
