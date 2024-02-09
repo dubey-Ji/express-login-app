@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
       res.status(403)
       return res.json({ message: 'User already exist' });
     }
-    const resp = await userModel.create({
+    await userModel.create({
       email, name, password
     });
     res.status(201);
