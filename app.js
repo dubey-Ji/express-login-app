@@ -35,15 +35,6 @@ app.use(middleware);
 // configuring routes
 app.use('/api', routes)
 
-
-function isTokenExpire(expireTime) {
-  if (Math.floor(Date.now() / 1000) - expireTime < 0) {
-    return false;
-  }
-  return true;
-}
-
-
 app.listen(PORT, () => {
   console.log(`Server is listening at ${PORT}`);
 });
