@@ -3,7 +3,10 @@ const REFRESH_TOKEN_EXP_TIME = process.env.REFRESH_TOKEN_EXP_TIME;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const MONGODB_URI = process.env.MONGODB_URI;
 const PORT = process.env.PORT;
-const PROTECTED_PATH = process.env.PROTECTED_PATH;
-const PURPOSE = process.env.PURPOSE;
+const PROTECTED_PATH = ['dashboard'];
+const PURPOSE = {
+  'ACCESS': 'ACCESS',
+  'REFRESH': 'REFRESH'
+};
 
 module.exports = { TOKEN_EXP_TIME, REFRESH_TOKEN_EXP_TIME, PRIVATE_KEY, PORT, MONGODB_URI, PROTECTED_PATH, PURPOSE };
