@@ -1,15 +1,20 @@
 {
   "name": "express-login-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "An Express.js login application",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "express",
+    "login",
+    "authentication",
+    "JWT",
+    "MongoDB"
+  ],
+  "author": "Ashutosh Dubey",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
