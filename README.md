@@ -1,6 +1,6 @@
 # Express Login App
 
-Welcome to Express Login App! This application is a simple demonstration of user authentication and session management using Express.js, MongoDB, Passport.js, JSON Web Tokens (JWT), and password encryption.
+Welcome to Express Login App! This application is a simple demonstration of user authentication and token management using Express.js, MongoDB, JSON Web Tokens (JWT), and password encryption.
 
 ## Features
 
