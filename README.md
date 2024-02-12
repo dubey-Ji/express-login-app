@@ -1,12 +1,12 @@
 # Express Login App
 
-Welcome to Express Login App! This application is a simple demonstration of user authentication and token management using Express.js, MongoDB, JSON Web Tokens (JWT), and password encryption.
+Welcome to the Express Login App! This application is a simple demonstration of user authentication and token management using Express.js, MongoDB, JSON Web Tokens (JWT), and password encryption.
 
 ## Features
 
 - **User Authentication**: Users can sign up and log in securely using JWT tokens.
 - **Stateless Authentication**: JWT tokens are used for authentication, making the application stateless.
-- **Refresh Token**: Implements a refresh token mechanism for maintaining user sessions.
+- **Refresh Token**: Implements a refresh token mechanism for maintaining user tokens.
 - **MongoDB Integration**: Stores user data and authentication details in a MongoDB database.
 - **Express.js Framework**: Built using Express.js for handling HTTP requests, routing, and middleware.
 
