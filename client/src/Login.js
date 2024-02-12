@@ -1,19 +1,20 @@
 import { Grid, TextField, Button } from '@mui/material'
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import authService from './Authservice';
 
-function Login({ setIsAuthenticated, isAuthenticate }) {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useOutletContext();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(isAuthenticate) {
+    if (isAuthenticated) {
       navigate('/dashboard');
     }
-  });
+  }, []);
 
   const hanldeEmailChange = (e) => {
     setEmail(e.target.value);
@@ -25,24 +26,15 @@ function Login({ setIsAuthenticated, isAuthenticate }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
-      const resp = await axios.post('http://localhost:8000/api/login', {
-        email,
-        password
-      });
+      const resp = await authService.login(email, password);
       if (resp.status === 200) {
-        console.log(resp)
-        const { token, refreshToken } = resp.data;
-        localStorage.setItem('token', token);
-        localStorage.setItem('refreshToken', refreshToken);
-        setIsAuthenticated(true);
-
-        setTimeout(() => {
-          console.log('isAuthenticate', isAuthenticate)
-        }, 10000);
+        localStorage.setItem('token', resp.data.token);
+        localStorage.setItem('refresh-token', resp.data.refreshToken);
+        setIsAuthenticated(true)
         return navigate('/dashboard');
       }
+      console.log('something went wrong');
     } catch (error) {
       console.error(error);
     }

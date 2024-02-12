@@ -1,17 +1,19 @@
 import { Grid, TextField, Button } from '@mui/material'
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import authService from './Authservice';
 
-function Signup({ isAuthenticate }) {
+function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useOutletContext();
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticate) {
-      return navigate('/dashboard');
+    if (isAuthenticated) {
+      navigate('/dashboard');
     }
   });
 
@@ -29,16 +31,12 @@ function Signup({ isAuthenticate }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const resp = await axios.post('http://localhost:8000/api/signup', {
-        name,
-        email,
-        password
-      });
-      if (resp.status === 201) {
-        return navigate('login');
+      const response = await authService.signup(name, email, password);
+      if (response.status === 201) {
+        return navigate('/login');
       }
+      console.log('Something went wrong');
     } catch (error) {
       console.error(error);
     }
