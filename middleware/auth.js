@@ -11,31 +11,26 @@ function isTokenExpire(expireTime) {
 }
 
 function authMiddleware(req, res, next) {
-  const token = req.headers['authorization'].split(' ')[1];
-  const decodedToken = jwt.decode(token);
-  if (jwt.verify(token, PRIVATE_KEY) && jwt.verify(token, PRIVATE_KEY).purpose === PURPOSE.ACCESS) {
-    if (!isTokenExpire(decodedToken.exp)) {
-      next();
-    } else {
-      res.status(400);
-      return res.json({ message: 'Unathorized' });
+  try {
+    const token = req.headers['authorization'].split(' ')[1];
+    if (jwt.verify(token, PRIVATE_KEY)) {
+      next()
     }
-  } else if (jwt.verify(token, PRIVATE_KEY) && jwt.verify(token, PRIVATE_KEY).purpose === PURPOSE.REFRESH) {
-    if (!isTokenExpire(decodedToken.exp)) {
-      next('/refreshToken');
+  } catch (error) {
+    if (error.message === 'jwt expired') {
+      res.status(401);
+      return res.json({ message: 'Token expired' });
     } else {
       res.status(400);
-      return res.json({ message: 'Unathorized' });
+      return res.json({ message: 'Unauthorized' });
     }
   }
-  res.statu(400);
-  return res.json({ message: 'Unathorized' });
 }
 
 function middleware(req, res, next) {
   const path = req.url.split('/')[2];
   if (PROTECTED_PATH.includes(path)) {
-    authMiddleware(req, res, next);
+    return authMiddleware(req, res, next);
   }
   next();
 }
